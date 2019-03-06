@@ -1,0 +1,40 @@
+﻿<Window x:Class="IRP.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IRP"
+        mc:Ignorable="d"
+        Title="Verallia Montblanc IRP" Height="567" Width="960">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" HorizontalAlignment="Stretch">
+            <MenuItem Header="Archivo">
+                <MenuItem Header="Nuevo">
+                    <MenuItem Header="IRP"/>
+                    <Separator/>
+                    <MenuItem Header="Fabricación"/>
+                    <MenuItem Header="Modelo" Click="AddNewModel"/>
+                    <Separator/>
+                    <MenuItem Header="Defecto"/>
+                </MenuItem>
+                <MenuItem Header="Guardar"/>
+                <Separator/>
+                <MenuItem Header="Salir" Click="Exit"/>
+            </MenuItem>
+            <MenuItem Header="Ver">
+                <MenuItem Header="Modelos" Click="ShowModels"/>
+                <MenuItem Header="Lineas" Click="ShowLines"/>
+                <MenuItem Header="Defectos">
+                    <MenuItem Header="Lista de defectos" Click="ShowDefects"/>
+                    <MenuItem Header="Tipos de defectos" Click="ShowDefectTypes"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Ayuda">
+                <MenuItem Header="Cargar datos" Click="LoadSampleData"/>
+            </MenuItem>
+        </Menu>
+
+        <ContentControl x:Name="ContentControl"/>
+      
+    </DockPanel>
+</Window>

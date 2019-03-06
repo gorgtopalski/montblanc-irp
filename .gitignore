@@ -1,4 +1,7 @@
 
+#Don't push sample db to GIT
+*.db
+
 #Don't push sample data to GIT
 SampleData/ 
 
