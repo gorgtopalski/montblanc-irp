@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Vanilla_IRP.Properties" GeneratedClassName="Db">
+  <Profiles />
+  <Settings>
+    <Setting Name="CommonsDbPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">db\\Commons</Value>
+    </Setting>
+    <Setting Name="DbSuffix" Type="System.String" Scope="User">
+      <Value Profile="(Default)">db</Value>
+    </Setting>
+    <Setting Name="ProductionDbPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">db\\Production</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
