@@ -52,5 +52,17 @@ namespace IRP.View
             var ctx = new ListDefectViewModel();
             ContentControl.Content = new ListDefectView() {DataContext = ctx};
         }
+
+        private void AddNewProduction(object sender, RoutedEventArgs e)
+        {
+            var ctx = new ListProductionViewModel();
+            ctx.AddNewCommand.Execute(null);
+            ContentControl.Content = new ListProductionView() { DataContext = ctx };
+        }
+
+        private void ShowProductions(object sender, RoutedEventArgs e)
+        {
+            ContentControl.Content = new ListProductionView();
+        }
     }
 }

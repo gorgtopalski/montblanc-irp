@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IRP"
         mc:Ignorable="d"
-        Title="Verallia Montblanc IRP" Height="567" Width="960">
+        Title="Verallia Montblanc IRP" 
+        Height="400" Width="647">
     <DockPanel>
         <Menu DockPanel.Dock="Top" HorizontalAlignment="Stretch">
             <MenuItem Header="Archivo">
                 <MenuItem Header="Nuevo">
                     <MenuItem Header="IRP"/>
                     <Separator/>
-                    <MenuItem Header="Fabricación"/>
+                    <MenuItem Header="Fabricación" Click="AddNewProduction"/>
                     <MenuItem Header="Modelo" Click="AddNewModel"/>
                     <Separator/>
                     <MenuItem Header="Defecto"/>
@@ -22,6 +23,7 @@
                 <MenuItem Header="Salir" Click="Exit"/>
             </MenuItem>
             <MenuItem Header="Ver">
+                <MenuItem Header="Fabricaciones" Click="ShowProductions"/>
                 <MenuItem Header="Modelos" Click="ShowModels"/>
                 <MenuItem Header="Lineas" Click="ShowLines"/>
                 <MenuItem Header="Defectos">

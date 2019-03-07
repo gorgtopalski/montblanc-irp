@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:IRP.ViewModel"
              xmlns:util="clr-namespace:IRP.Utils"
              mc:Ignorable="d" 
-             d:DesignHeight="567" d:DesignWidth="960">
+             d:DesignHeight="400" d:DesignWidth="647">
     <UserControl.DataContext>
         <vm:ListLineViewModel/>
     </UserControl.DataContext>
@@ -21,7 +21,7 @@
             <Button Content="Borrar" Command="{Binding DeleteSelectedCommand}" IsEnabled="{Binding IsSelected}"/>
             <!-- <TextBox MinWidth="100" Text="Buscar...."/> -->
         </ToolBar>
-        <GroupBox Margin="5" DockPanel.Dock="Right" Header="Editar" Visibility="{Binding IsEditVisible}"  VerticalAlignment="Top" HorizontalAlignment="Stretch">
+        <GroupBox Margin="5" DockPanel.Dock="Bottom" Header="Editar" Visibility="{Binding IsEditVisible}"  VerticalAlignment="Top" HorizontalAlignment="Stretch">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
