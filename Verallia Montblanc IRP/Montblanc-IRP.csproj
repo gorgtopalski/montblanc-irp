@@ -70,6 +70,7 @@
     <Compile Include="Domain\Defect.cs" />
     <Compile Include="Domain\DefectType.cs" />
     <Compile Include="Domain\Line.cs" />
+    <Compile Include="Domain\Production.cs" />
     <Compile Include="Services\DefectService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Domain\IDomain.cs" />
@@ -79,12 +80,14 @@
       <DependentUpon>Db.settings</DependentUpon>
     </Compile>
     <Compile Include="Services\IDomainService.cs" />
+    <Compile Include="Services\ProductionService.cs" />
     <Compile Include="Utils\GridViewSort.cs" />
     <Compile Include="ViewModel\ListDefectTypeViewModel.cs" />
     <Compile Include="ViewModel\ListDefectViewModel.cs" />
     <Compile Include="ViewModel\ListLineViewModel.cs" />
     <Compile Include="ViewModel\ListDomainViewModel.cs" />
     <Compile Include="ViewModel\ListModelViewModel.cs" />
+    <Compile Include="ViewModel\ListProductionViewModel.cs" />
     <Compile Include="View\ListLineView.xaml.cs">
       <DependentUpon>ListLineView.xaml</DependentUpon>
     </Compile>
@@ -93,6 +96,9 @@
     </Compile>
     <Compile Include="View\ListDefectView.xaml.cs">
       <DependentUpon>ListDefectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ListProductionView.xaml.cs">
+      <DependentUpon>ListProductionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ListModelView.xaml.cs">
       <DependentUpon>ListModelView.xaml</DependentUpon>
@@ -106,6 +112,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ListDefectView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ListProductionView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
