@@ -105,7 +105,8 @@ namespace IRP.ViewModel
         private void DoCancel()
         {
             IsEditVisible = Visibility.Collapsed;
-            Selected = default(T);
+            IsSelected = false;
+            //Selected = default(T);
         }
 
         public void DoEdit()
@@ -136,7 +137,7 @@ namespace IRP.ViewModel
         private void DoAdd()
         {
             IsEditVisible = Visibility.Visible;
-            Selected = default(T);
+            //Selected = default(T);
             Selected = new T();
         }
 
