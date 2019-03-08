@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
+﻿using IRP.Database;
 using IRP.Domain;
 using LiteDB;
 using MvvmFoundation.Wpf;
-using IRP.Database;
+using System.Collections.Generic;
 
 namespace IRP.Services
 {
@@ -19,9 +17,20 @@ namespace IRP.Services
             Db = CommonsDb.Db();
         }
 
+        public BaseService(LiteRepository db)
+        {
+            Db = db;
+        }
+
         public void Save(T item)
         {
-            Db.Upsert(item);
+            if (item == null) return;
+            if (!item.Validate()) return;
+            if (item.Id() == BsonValue.Null)
+                Db.Insert(item);
+            else
+                Db.Update(item);
+
             RaisePropertyChanged(nameof(Values));
         }
 
