@@ -10,7 +10,12 @@ namespace IRP.Domain
         public string Name { get; set; }
         
         public BsonValue Id() => new BsonValue(DefectTypeId);
-
+        public bool Validate()
+        {
+            if (string.IsNullOrWhiteSpace(Name)) return false;
+            return Severity >= 0;
+        }
+        
         #region Equals, Hash, ToString
         
         public override string ToString() => Name;

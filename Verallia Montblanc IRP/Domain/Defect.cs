@@ -1,4 +1,5 @@
-﻿using LiteDB;
+﻿using System.Linq;
+using LiteDB;
 
 namespace IRP.Domain
 {
@@ -11,7 +12,12 @@ namespace IRP.Domain
         public  DefectType DefectType { get; set; }
 
         public BsonValue Id() => new BsonValue(DefectId);
-
+        public bool Validate()
+        {
+            if (string.IsNullOrWhiteSpace(Name)) return false;
+            return !string.IsNullOrWhiteSpace(FullName);
+        }
+        
         #region Equls, Hash, ToString
         public override string ToString() => $"{Name} {FullName} [{DefectType.Name}]";
 

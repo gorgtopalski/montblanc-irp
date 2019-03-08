@@ -1,4 +1,5 @@
-﻿using LiteDB;
+﻿using System.Windows.Forms;
+using LiteDB;
 
 namespace IRP.Domain
 {
@@ -9,7 +10,12 @@ namespace IRP.Domain
         public string Blueprint { get; set; }
 
         public BsonValue Id() => new BsonValue(ModelId);
-
+        public bool Validate()
+        {
+            if (string.IsNullOrWhiteSpace(Name)) return false;
+            return !string.IsNullOrWhiteSpace(Blueprint);
+        }
+        
         #region Equals, Hash and ToString
         public override string ToString()
         {

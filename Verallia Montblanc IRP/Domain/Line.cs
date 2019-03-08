@@ -1,4 +1,5 @@
-﻿using LiteDB;
+﻿using System.Windows.Controls;
+using LiteDB;
 
 namespace IRP.Domain
 {
@@ -8,6 +9,10 @@ namespace IRP.Domain
         public string Name { get; set; }
 
         public BsonValue Id() => new BsonValue(LineId);
+        public bool Validate()
+        {
+            return !string.IsNullOrWhiteSpace(Name);
+        }
         
         #region Equals, Hash and ToString
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 using LiteDB;
 
 namespace IRP.Domain
@@ -13,23 +14,32 @@ namespace IRP.Domain
         public DateTime Start {get; set; }
         public DateTime? End { get; set; }
         public Model Model { get; set; }
-
+        public Line Line { get; set; }
+        
         public Production()
         {
             End = null;
             Model = null;
+            Line = null;
             Start = DateTime.Today;
         }
 
         public BsonValue Id() => new BsonValue(ProductionId);
 
+        public bool Validate()
+        {
+            if (Start == DateTime.MinValue) return false;
+            if (Model == null) return false;
+            return Line != null;
+        }
+        
         #region Equals, Hash, ToString
 
-        public override string ToString() => $"{Model.Name} [{Start}-{End}]";
-
+        public override string ToString() => $"{Line.Name} - {Model.Name} [{Start}-{End}]";
+        
         protected bool Equals(Production other)
         {
-            return Equals(ProductionId, other.ProductionId) && Equals(Model, other.Model);
+            return Start.Equals(other.Start) && End.Equals(other.End) && Equals(Model, other.Model) && Equals(Line, other.Line);
         }
 
         public override bool Equals(object obj)
@@ -44,7 +54,11 @@ namespace IRP.Domain
         {
             unchecked
             {
-                return ((ProductionId.GetHashCode()) * 397) ^ (Model != null ? Model.GetHashCode() : 0);
+                var hashCode = Start.GetHashCode();
+                hashCode = (hashCode * 397) ^ End.GetHashCode();
+                hashCode = (hashCode * 397) ^ (Model != null ? Model.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Line != null ? Line.GetHashCode() : 0);
+                return hashCode;
             }
         }
 
