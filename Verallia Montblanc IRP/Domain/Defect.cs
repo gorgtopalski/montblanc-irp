@@ -11,7 +11,9 @@ namespace IRP.Domain
 
         public  DefectType DefectType { get; set; }
 
-        public BsonValue Id() => new BsonValue(DefectId);
+        public BsonValue Id() => DefectId > 0 ? new BsonValue(DefectId) : new BsonValue();
+
+
         public bool Validate()
         {
             if (string.IsNullOrWhiteSpace(Name)) return false;

@@ -9,7 +9,8 @@ namespace IRP.Domain
         public string Name { get; set; }
         public string Blueprint { get; set; }
 
-        public BsonValue Id() => new BsonValue(ModelId);
+        public BsonValue Id() => ModelId > 0 ? new BsonValue(ModelId) : new BsonValue();
+
         public bool Validate()
         {
             if (string.IsNullOrWhiteSpace(Name)) return false;

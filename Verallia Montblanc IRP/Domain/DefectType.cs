@@ -9,7 +9,7 @@ namespace IRP.Domain
         public int Severity { get; set; }
         public string Name { get; set; }
         
-        public BsonValue Id() => new BsonValue(DefectTypeId);
+        public BsonValue Id() => DefectTypeId > 0 ? new BsonValue(DefectTypeId) : new BsonValue();
         public bool Validate()
         {
             if (string.IsNullOrWhiteSpace(Name)) return false;

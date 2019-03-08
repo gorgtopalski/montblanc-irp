@@ -8,7 +8,7 @@ namespace IRP.Domain
         public int LineId { get; set; }
         public string Name { get; set; }
 
-        public BsonValue Id() => new BsonValue(LineId);
+        public BsonValue Id() => LineId > 0 ? new BsonValue(LineId) : new BsonValue();
         public bool Validate()
         {
             return !string.IsNullOrWhiteSpace(Name);
