@@ -12,7 +12,7 @@ using IRP.Services;
 
 namespace IRP.ViewModel
 {
-    public class ListDomainViewModel<T> : ObservableObject where T : IDomain, new()
+    public class BaseDomainListVM<T> : ObservableObject where T : class, IDomain, new()
     {
         private readonly ObservableCollection<T> _data;
         private readonly BaseService<T> _service;
@@ -63,7 +63,7 @@ namespace IRP.ViewModel
         public RelayCommand SaveCommand { get; set; }
         public RelayCommand CancelCommand { get; set; }
 
-        public ListDomainViewModel()
+        public BaseDomainListVM()
         {
             _service = new BaseService<T>();
             _data = new ObservableCollection<T>();
@@ -71,7 +71,7 @@ namespace IRP.ViewModel
             SetupViewModel(_service);
         }
 
-        public ListDomainViewModel(BaseService<T> service)
+        public BaseDomainListVM(BaseService<T> service)
         {
             _service = service;
             _service.GetAll();
@@ -106,7 +106,7 @@ namespace IRP.ViewModel
         {
             IsEditVisible = Visibility.Collapsed;
             IsSelected = false;
-            //Selected = default(T);
+            Selected = null;
         }
 
         public void DoEdit()

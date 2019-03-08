@@ -9,7 +9,7 @@ using IRP.Services;
 
 namespace IRP.ViewModel
 {
-    public class ListDefectViewModel : ListDomainViewModel<Defect>
+    public class ListDefectViewModel : BaseDomainListVM<Defect>
     {
         public ObservableCollection<DefectType> DefectTypes { get; }
         

@@ -15,7 +15,7 @@ using static System.Windows.Application;
 
 namespace IRP.ViewModel
 {
-   public class ListModelViewModel : ListDomainViewModel<Model>
+   public class ListModelViewModel : BaseDomainListVM<Model>
    {
        public ListModelViewModel() : base() { }
    }

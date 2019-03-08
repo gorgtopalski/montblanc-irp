@@ -7,7 +7,7 @@ using IRP.Domain;
 
 namespace IRP.ViewModel
 {
-    public class ListLineViewModel : ListDomainViewModel<Line>
+    public class ListLineViewModel : BaseDomainListVM<Line>
     {
         public ListLineViewModel() : base() { }
     }

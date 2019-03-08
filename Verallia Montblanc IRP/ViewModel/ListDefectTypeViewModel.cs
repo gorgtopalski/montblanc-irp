@@ -7,7 +7,7 @@ using IRP.Domain;
 
 namespace IRP.ViewModel
 {
-    public class ListDefectTypeViewModel : ListDomainViewModel<DefectType>
+    public class ListDefectTypeViewModel : BaseDomainListVM<DefectType>
     {
         public ListDefectTypeViewModel() : base() { }
     }
