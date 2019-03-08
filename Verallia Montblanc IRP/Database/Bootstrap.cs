@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using IRP.Domain;
+using IRP.Services;
 
 namespace IRP.Database
 {
@@ -13,6 +14,7 @@ namespace IRP.Database
             LoadLines();
             LoadDefectTypes();
             LoadDefects();
+            LoadRejectionStates();
         }
 
         private static void Reader(string resource, Action<string> action)
@@ -27,10 +29,28 @@ namespace IRP.Database
             }
         }
 
+        // Will try to load the default rejection states from the provided CSV file
+        private static void LoadRejectionStates()
+        {
+            if (Properties.Resources.PaletRejectStates == null) return;
+            var service = new BaseService<RejectionState>();
+
+            Reader(Properties.Resources.PaletRejectStates, delegate (string s)
+            {
+                var state = new RejectionState { State = s.Split(',').First().Trim() };
+
+                if (!state.Validate()) return;
+                if (!service.GetAll().Exists(x => x.Equals(state)))
+                    service.Save(state);
+            });
+
+        }
+
         //Will try to load the default list from the provided CSV file and map it to the LiteDB
         private static void LoadModels()
         {
             if (Properties.Resources.Models == null) return;
+            var service = new BaseService<Model>();
             Reader(Properties.Resources.Models, delegate (string s)
             {
                 var model = new Model
@@ -38,70 +58,62 @@ namespace IRP.Database
                     Name = s.Split(',').First().Trim(),
                     Blueprint = s.Split(',').Last().Trim()
                 };
-
-                if (!CommonsDb.Db().Query<Model>().Where(x => x.Equals(model)).Exists())
-                {
-                    CommonsDb.Db().Insert(model);
-                }
+                if (!model.Validate()) return;
+                if (!service.GetAll().Exists(x => x.Equals(model)))
+                    service.Save(model);
             });
         }
 
         private static void LoadLines()
         {
             if (Properties.Resources.Lines == null) return;
+            var service = new BaseService<Line>();
             Reader(Properties.Resources.Lines, delegate (string s)
             {
-                var line = new Line { Name = s };
-                if (!CommonsDb.Db().Query<Line>().Where(x => x.Equals(line)).Exists())
-                {
-                    CommonsDb.Db().Insert(line);
-                }
+                var line = new Line { Name = s.Split(',').First().Trim() };
+
+                if (!line.Validate()) return;
+                if (!service.GetAll().Exists(x => x.Equals(line)))
+                    service.Save(line);
             });
         }
 
         private static void LoadDefectTypes()
         {
             if (Properties.Resources.DefectTypes == null) return;
+            var service = new BaseService<DefectType>();
             Reader(Properties.Resources.DefectTypes, delegate (string s)
             {
                 var name = s.Split(',').First().Trim();
-                if (Int32.TryParse(s.Split(',').Last().Trim(), out var severity))
+                if (!int.TryParse(s.Split(',').Last().Trim(), out var severity)) return;
+                var defectType = new DefectType
                 {
-                    var defectType = new DefectType
-                    {
-                        Name = name,
-                        Severity = severity
-                    };
-                    if (!CommonsDb.Db().Query<DefectType>().Where(x => x.Equals(defectType)).Exists())
-                    {
-                        CommonsDb.Db().Insert(defectType);
-                    }
-                }
+                    Name = name,
+                    Severity = severity
+                };
+                if (!defectType.Validate()) return;
+                if (!service.GetAll().Exists(x => x.Equals(defectType)))
+                    service.Save(defectType);
             });
         }
         private static void LoadDefects()
         {
             if (Properties.Resources.Defects == null) return;
+            var service = new DefectService();
             Reader(Properties.Resources.Defects, delegate (string s)
             {
-                var name = s.Split(',')[0].Trim();
-                var fullName = s.Split(',')[1].Trim();
                 var defName = s.Split(',')[2].Trim();
-                var def = CommonsDb.Db().Query<DefectType>().Where(x => x.Name == defName).First();
+                var def = new BaseService<DefectType>().GetAll().Find(x => x.Name == defName);
 
                 var defect = new Defect
                 {
-                    Name = name,
-                    FullName = fullName,
+                    Name = s.Split(',')[0].Trim(),
+                    FullName = s.Split(',')[1].Trim(),
                     DefectType = def
                 };
-                if (!CommonsDb.Db().Query<Defect>()
-                    .Include(x => x.DefectType)
-                    .Where(x => x.Equals(defect))
-                    .Exists())
-                {
-                    CommonsDb.Db().Insert(defect);
-                }
+                if (!defect.Validate()) return;
+                if (!service.GetAll().Exists( x => x.Equals(defect)))
+                    service.Save(defect);
             });
         }
 
