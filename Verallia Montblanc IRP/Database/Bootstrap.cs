@@ -1,8 +1,8 @@
-﻿using System;
+﻿using IRP.Domain;
+using IRP.Services;
+using System;
 using System.IO;
 using System.Linq;
-using IRP.Domain;
-using IRP.Services;
 
 namespace IRP.Database
 {
@@ -17,6 +17,7 @@ namespace IRP.Database
             LoadRejectionStates();
         }
 
+        //Line reader for the CSV files
         private static void Reader(string resource, Action<string> action)
         {
             using (var sr = new StringReader(resource))
@@ -33,6 +34,7 @@ namespace IRP.Database
         private static void LoadRejectionStates()
         {
             if (Properties.Resources.PaletRejectStates == null) return;
+
             var service = new BaseService<RejectionState>();
 
             Reader(Properties.Resources.PaletRejectStates, delegate (string s)
@@ -46,11 +48,13 @@ namespace IRP.Database
 
         }
 
-        //Will try to load the default list from the provided CSV file and map it to the LiteDB
+        //Will try to load the default models from the provided CSV file
         private static void LoadModels()
         {
             if (Properties.Resources.Models == null) return;
+
             var service = new BaseService<Model>();
+
             Reader(Properties.Resources.Models, delegate (string s)
             {
                 var model = new Model
@@ -64,10 +68,13 @@ namespace IRP.Database
             });
         }
 
+        //Will try to load the default lines from the provided CSV file
         private static void LoadLines()
         {
             if (Properties.Resources.Lines == null) return;
+
             var service = new BaseService<Line>();
+
             Reader(Properties.Resources.Lines, delegate (string s)
             {
                 var line = new Line { Name = s.Split(',').First().Trim() };
@@ -78,10 +85,13 @@ namespace IRP.Database
             });
         }
 
+        //Will try to load the default defect types from the provided CSV file
         private static void LoadDefectTypes()
         {
             if (Properties.Resources.DefectTypes == null) return;
+
             var service = new BaseService<DefectType>();
+
             Reader(Properties.Resources.DefectTypes, delegate (string s)
             {
                 var name = s.Split(',').First().Trim();
@@ -96,10 +106,14 @@ namespace IRP.Database
                     service.Save(defectType);
             });
         }
+
+        //Will try to load the default defects from the provided CSV file
         private static void LoadDefects()
         {
             if (Properties.Resources.Defects == null) return;
+
             var service = new DefectService();
+
             Reader(Properties.Resources.Defects, delegate (string s)
             {
                 var defName = s.Split(',')[2].Trim();
@@ -116,7 +130,5 @@ namespace IRP.Database
                     service.Save(defect);
             });
         }
-
-
     }
 }
