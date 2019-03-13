@@ -10,6 +10,7 @@ namespace IRP.Database
 
         private CommonsDb()
         {
+            //TODO verify folder creation
             System.IO.Directory.CreateDirectory(Properties.Db.Default.CommonsDbPath);
             _repository = new LiteRepository(GenerateConnectionString());
 

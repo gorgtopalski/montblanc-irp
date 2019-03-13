@@ -15,9 +15,12 @@ namespace IRP.Database
             _repository = new LiteRepository(GenerateConnectionString());
 
             //Map relations
-            
+            BsonMapper.Global.Entity<Palet>()
+                .DbRef(x => x.Production, "Production");
+
             //Index generation
             var db = _repository.Database;
+            
         }
 
         public static ProductionDb Instance() => (_instance ?? (_instance = new ProductionDb()));
