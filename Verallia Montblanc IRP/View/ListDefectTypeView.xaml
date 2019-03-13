@@ -20,49 +20,49 @@
             <Button Content="Borrar" Command="{Binding DeleteSelectedCommand}" IsEnabled="{Binding IsSelected}"/>
         </ToolBar>
         <GroupBox Margin="5" DockPanel.Dock="Bottom" Header="Editar" Visibility="{Binding IsEditVisible}"  VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition MinWidth="150"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="29"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition MinWidth="150"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="29"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                    <!-- Name -->
-                    <Label  Grid.Row="0" Grid.Column="0" Content="Nombre"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Selected.Name}" />
+                <!-- Name -->
+                <Label  Grid.Row="0" Grid.Column="0" Content="Nombre"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Selected.Name}" />
 
-                    <!-- Severity -->
-                    <Label Grid.Row="1" Grid.Column="0" Content="Criticidad" />
-                    <TextBox Grid.Row="1" Grid.Column="1"  Margin="5" Text="{Binding Selected.Severity}" />
+                <!-- Severity -->
+                <Label Grid.Row="1" Grid.Column="0" Content="Criticidad" />
+                <TextBox Grid.Row="1" Grid.Column="1"  Margin="5" Text="{Binding Selected.Severity}" />
 
-                    <!-- Controls  -->
-                    <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Right">
-                        <Button Content="Guardar" Margin="5,0,0,0" Command="{Binding SaveCommand}"/>
-                        <Button Content="Cancelar" Margin="5,0" IsCancel="True" Command="{Binding CancelCommand}"/>
-                    </WrapPanel>
-                </Grid>
-            </GroupBox>
+                <!-- Controls  -->
+                <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" HorizontalAlignment="Right">
+                    <Button Content="Guardar"  Margin="5,0,5,0" Command="{Binding SaveCommand}"   IsDefault="True"/>
+                    <Button Content="Cancelar" Margin="5,0,5,0" Command="{Binding CancelCommand}" IsCancel="True" />
+                </WrapPanel>
+            </Grid>
+        </GroupBox>
         <GroupBox Margin="5" Header="Tipos de defecto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-           <ListView ItemsSource="{Binding Data}" 
-                     SelectionMode="Single" 
-                     SelectedItem="{Binding Selected}" 
-                     VerticalAlignment="Stretch" 
+            <ListView ItemsSource="{Binding Data}"
+                     SelectionMode="Single"
+                     SelectedItem="{Binding Selected}"
+                     VerticalAlignment="Stretch"
                      HorizontalAlignment="Stretch"
                      MouseDoubleClick="ShowSelected"
                      util:GridViewSort.AutoSort="True">
                 <ListView.View>
                     <GridView AllowsColumnReorder="True">
-                        <GridViewColumn Width="Auto" Header="Id" DisplayMemberBinding="{Binding DefectTypeId}" util:GridViewSort.PropertyName="DefectTypeId"/>
-                        <GridViewColumn Width="Auto" Header="Nombre" DisplayMemberBinding="{Binding Name}" util:GridViewSort.PropertyName="Name"/>
-                        <GridViewColumn Width="Auto" Header="Criticidad" DisplayMemberBinding="{Binding Severity}" util:GridViewSort.PropertyName="Severity"/>
+                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding DefectTypeId}" util:GridViewSort.PropertyName="DefectTypeId"/>
+                        <GridViewColumn Header="Nombre" DisplayMemberBinding="{Binding Name}" util:GridViewSort.PropertyName="Name"/>
+                        <GridViewColumn Header="Criticidad" DisplayMemberBinding="{Binding Severity}" util:GridViewSort.PropertyName="Severity"/>
                     </GridView>
                 </ListView.View>
-            </ListView>
+           </ListView>
         </GroupBox>
     </DockPanel>
 </UserControl>
