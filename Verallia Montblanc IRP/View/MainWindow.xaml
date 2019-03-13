@@ -6,12 +6,14 @@
         xmlns:local="clr-namespace:IRP"
         mc:Ignorable="d"
         Title="Verallia Montblanc IRP" 
-        Height="400" Width="647">
+        Closing="OnClosing"
+        MinWidth="500"
+        >
     <DockPanel>
         <Menu DockPanel.Dock="Top" HorizontalAlignment="Stretch">
             <MenuItem Header="Archivo">
                 <MenuItem Header="Nuevo">
-                    <MenuItem Header="IRP"/>
+                    <MenuItem Header="IRP" Click="MenuItem_OnClick" />
                     <Separator/>
                     <MenuItem Header="Fabricación" Click="AddNewProduction"/>
                     <MenuItem Header="Modelo" Click="AddNewModel"/>
@@ -23,12 +25,16 @@
                 <MenuItem Header="Salir" Click="Exit"/>
             </MenuItem>
             <MenuItem Header="Ver">
+                <MenuItem Header="Global" Click="ShowOverview"/>
                 <MenuItem Header="Fabricaciones" Click="ShowProductions"/>
                 <MenuItem Header="Modelos" Click="ShowModels"/>
                 <MenuItem Header="Lineas" Click="ShowLines"/>
                 <MenuItem Header="Defectos">
                     <MenuItem Header="Lista de defectos" Click="ShowDefects"/>
                     <MenuItem Header="Tipos de defectos" Click="ShowDefectTypes"/>
+                </MenuItem>
+                <MenuItem Header="Palets">
+                    <MenuItem Header="Estados de rechazo" Click="ShowPaletRejectStates"/>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Ayuda">

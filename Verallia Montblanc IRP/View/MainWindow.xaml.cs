@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using IRP.Database;
+using IRP.Utils;
 using IRP.ViewModel;
 
 namespace IRP.View
@@ -14,6 +15,7 @@ namespace IRP.View
         {
             InitializeComponent();
 
+
             //Restore size and position from previous session
             this.Top = Properties.Settings.Default.Top;
             this.Left = Properties.Settings.Default.Left;
@@ -23,7 +25,7 @@ namespace IRP.View
             {
                 WindowState = WindowState.Maximized;
             }
-            
+
             //Default "home page"
             ContentControl.Content = new Overview();
         }
@@ -105,6 +107,16 @@ namespace IRP.View
             }
 
             Properties.Settings.Default.Save();
+        }
+
+        private void ShowOverview(object sender, RoutedEventArgs e)
+        {
+            ContentControl.Content = new Overview();
+        }
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            ContentControl.Content = new IrpView() {DataContext = new IrpViewModel()};
         }
     }
 }
