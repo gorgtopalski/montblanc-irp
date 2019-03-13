@@ -1,14 +1,16 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 using LiteDB;
 
 namespace IRP.Domain
 {
-    public class Line : IDomain
+    public class Line : IDomain, IComparable<Line>
     {
         public int LineId { get; set; }
         public string Name { get; set; }
 
         public BsonValue Id() => LineId > 0 ? new BsonValue(LineId) : new BsonValue();
+
         public bool Validate()
         {
             return !string.IsNullOrWhiteSpace(Name);
@@ -41,5 +43,12 @@ namespace IRP.Domain
         }
 
         #endregion
+
+        public int CompareTo(Line other)
+        {
+            if (ReferenceEquals(this, other)) return 0;
+            if (ReferenceEquals(null, other)) return 1;
+            return string.Compare(Name, other.Name, StringComparison.Ordinal);
+        }
     }
 }

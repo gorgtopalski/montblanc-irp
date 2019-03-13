@@ -8,7 +8,7 @@ using LiteDB;
 
 namespace IRP.Domain
 {
-    public class Production : IDomain
+    public class Production : IDomain, IComparable<Production>
     {
         public long ProductionId { get; set; }
         public DateTime Start {get; set; }
@@ -24,7 +24,7 @@ namespace IRP.Domain
             Start = DateTime.Today;
         }
 
-        public BsonValue Id() => new BsonValue(ProductionId);
+        public BsonValue Id() => ProductionId > 0 ? new BsonValue(ProductionId) : new BsonValue(); 
 
         public bool Validate()
         {
@@ -39,15 +39,18 @@ namespace IRP.Domain
         
         protected bool Equals(Production other)
         {
-            return Start.Equals(other.Start) && End.Equals(other.End) && Equals(Model, other.Model) && Equals(Line, other.Line);
+            if (other.ProductionId != 0 && ProductionId != 0)
+                return ProductionId.Equals(other.ProductionId);
+            else
+                return Start.Equals(other.Start) && End.Equals(other.End) && Equals(Model, other.Model) &&
+                       Equals(Line, other.Line);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((Production) obj);
+            return obj.GetType() == this.GetType() && Equals((Production) obj);
         }
 
         public override int GetHashCode()
@@ -61,7 +64,14 @@ namespace IRP.Domain
                 return hashCode;
             }
         }
-
+        
         #endregion
+
+        public int CompareTo(Production other)
+        {
+            if (ReferenceEquals(this, other)) return 0;
+            if (ReferenceEquals(null, other)) return 1;
+            return Comparer<Line>.Default.Compare(Line, other.Line);
+        }
     }
 }
