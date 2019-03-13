@@ -1,0 +1,155 @@
+﻿<UserControl x:Class="IRP.View.IrpView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mock="clr-namespace:IRP.ViewModel.DesignData"
+             xmlns:local="clr-namespace:IRP.View"
+             xmlns:util="clr-namespace:IRP.Utils"
+             xmlns:cc="clr-namespace:IRP.View.Controls"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance mock:MockIrpVm, IsDesignTimeCreatable=True}"
+             d:DesignHeight="600" d:DesignWidth="800"
+             >
+    <UserControl.Resources>
+        <util:ShiftConverter x:Key="ShiftConverter" />
+        <util:TeamConverter x:Key="TeamConverter" />
+    </UserControl.Resources>
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top">
+            <Button Content="Guardar"             Command="{Binding SaveIrpCommand}"/>
+            <Separator/>
+            <Button  Content="Motivo"             Command="{Binding AddMotiveCommand}"/>
+            <Button  Content="Palet Auditado"     Command="{Binding AddAuditCommand}"/>
+            <Separator/>
+            <Button  Content="Critico"            Command="{Binding CriticalCommand}"/>
+        </ToolBar>
+
+        <GroupBox DockPanel.Dock="Top" Header="Info">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                
+                <Label   Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Content="Linea"/>
+                <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Irp.Production.Line.Name}"/>
+
+                <Label   Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Content="Modelo"/>
+                <TextBox Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" VerticalAlignment="Center" Text="{Binding Irp.Production.Model.Name}"/>
+
+                <Label   Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="Fecha"/>
+                <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Irp.RejectDate, StringFormat={}{0:dd/MM/yyyy}}"/>
+
+                <Label   Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Content="Equipo"/>
+                <TextBox Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" Text="{Binding Irp.Team, Converter={StaticResource TeamConverter}}"/>
+
+                <Label   Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" Content="Turno"/>
+                <TextBox Grid.Row="1" Grid.Column="5" VerticalAlignment="Center" Text="{Binding Irp.Shift, Converter={StaticResource ShiftConverter}}"/>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox DockPanel.Dock="Bottom"  Header="Rechazo">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+            
+                <GroupBox Header="Info" Grid.Row="0" Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+
+                        <Label    Grid.Column="0" Content="Primer palet" VerticalAlignment="Center"/>
+                        <TextBox  Grid.Column="1" Text="{Binding Irp.FirstPalet}" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" MinWidth="50"/>
+                        <Label    Grid.Column="2" Content="Ultimo palet" Margin="5,0" VerticalAlignment="Center"/>
+                        <TextBox  Grid.Column="3" Text="{Binding Irp.LastPalet}" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" MinWidth="50"/>
+                            
+                        <StackPanel Orientation="Horizontal" Grid.Column="4" HorizontalAlignment="Center">
+                            <Label    Content="Etiquetas" Margin="5,0" VerticalAlignment="Center"/>
+                            <CheckBox IsChecked="{Binding Irp.RejectionLabel}" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
+
+                            <Label    Content="Turno Completo" Margin="5,0" VerticalAlignment="Center"/>
+                            <CheckBox IsChecked="{Binding Irp.RejectWholeShift}" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
+
+                            <Label    Content="Auditado" Margin="5,0" VerticalAlignment="Center"/>
+                            <CheckBox IsChecked="{Binding Irp.Bounded}" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
+
+                        </StackPanel>
+
+           
+
+                        <StackPanel Grid.Column="10" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Label   Content="Critico?" Margin="5,0" VerticalAlignment="Center"/>
+                            <CheckBox IsChecked="{Binding Irp.IsCritical}" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center"/>
+                        </StackPanel>
+                      
+                    </Grid>
+                </GroupBox>
+                
+
+                <GroupBox Header="Motivo de rechazo" Grid.Row="1" Margin="5">
+                    <StackPanel Margin="0,5">
+                        <!-- Motives -->
+
+                        <ItemsControl ItemsSource="{Binding Motives}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <cc:MotiveView/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </GroupBox>
+                
+                <GroupBox Header="Palets auditados" Grid.Row="2" Margin="5">
+
+                    <StackPanel Margin="0,5">
+                        <!-- Audits -->
+
+                        <ItemsControl ItemsSource="{Binding Audits}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <cc:AuditView/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+
+
+                </GroupBox>
+
+                
+            </Grid>
+        </GroupBox>
+    </DockPanel>
+</UserControl>
