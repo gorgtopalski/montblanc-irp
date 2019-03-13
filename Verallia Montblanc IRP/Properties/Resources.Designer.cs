@@ -123,5 +123,17 @@ namespace IRP.Properties {
                 return ResourceManager.GetString("Models", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a APR,
+        ///Reinyectado,
+        ///Reescogido,
+        ///Transferencia.
+        /// </summary>
+        internal static string PaletRejectStates {
+            get {
+                return ResourceManager.GetString("PaletRejectStates", resourceCulture);
+            }
+        }
     }
 }

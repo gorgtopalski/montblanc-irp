@@ -54,4 +54,6 @@ using System.Windows;
 [assembly: AssemblyVersion("0.0.1.0")]
 [assembly: AssemblyFileVersion("0.0.1.0")]
 [assembly: NeutralResourcesLanguage("es")]
+[assembly: InternalsVisibleTo("Montblanc-IRP.Tests")]
+[assembly: InternalsVisibleTo("Verallia Montblanc IRP.Explorables")]
 

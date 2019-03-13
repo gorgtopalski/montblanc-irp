@@ -66,11 +66,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Database\Bootstrap.cs" />
+    <Compile Include="Database\ProductionDb.cs" />
     <Compile Include="Database\CommonsDb.cs" />
+    <Compile Include="Domain\Audit.cs" />
+    <Compile Include="Domain\CriticalIrp.cs" />
     <Compile Include="Domain\Defect.cs" />
     <Compile Include="Domain\DefectType.cs" />
+    <Compile Include="Domain\Irp.cs" />
     <Compile Include="Domain\Line.cs" />
+    <Compile Include="Domain\Motive.cs" />
+    <Compile Include="Domain\Palet.cs" />
+    <Compile Include="Domain\PaletCount.cs" />
+    <Compile Include="Domain\RejectionState.cs" />
+    <Compile Include="Domain\PaletState.cs" />
     <Compile Include="Domain\Production.cs" />
+    <Compile Include="Domain\Shift.cs" />
+    <Compile Include="Domain\Team.cs" />
     <Compile Include="Services\DefectService.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Domain\IDomain.cs" />
@@ -80,14 +91,58 @@
       <DependentUpon>Db.settings</DependentUpon>
     </Compile>
     <Compile Include="Services\IDomainService.cs" />
+    <Compile Include="Services\PaletService.cs" />
     <Compile Include="Services\ProductionService.cs" />
     <Compile Include="Utils\GridViewSort.cs" />
+    <Compile Include="Utils\PaletColor.cs" />
+    <Compile Include="Utils\ProductionLineColor.cs" />
+    <Compile Include="Utils\ShiftConverter.cs" />
+    <Compile Include="Utils\TeamConverter.cs" />
+    <Compile Include="Utils\TimeShiftTeam.cs" />
+    <Compile Include="ViewModel\AuditViewModel.cs" />
+    <Compile Include="ViewModel\DesignData\MockAuditVm.cs" />
+    <Compile Include="ViewModel\DesignData\MockIrpVm.cs" />
+    <Compile Include="ViewModel\DesignData\MockMotiveVm.cs" />
+    <Compile Include="ViewModel\DesignData\MockPaletMapVm.cs" />
+    <Compile Include="ViewModel\DesignData\MockPaletVm.cs" />
+    <Compile Include="ViewModel\DesignData\MockProductionVm.cs" />
+    <Compile Include="ViewModel\IAuditVm.cs" />
+    <Compile Include="ViewModel\IIrpVm.cs" />
+    <Compile Include="ViewModel\IMotiveVm.cs" />
+    <Compile Include="ViewModel\IPaletMapVm.cs" />
+    <Compile Include="ViewModel\IPaletVm.cs" />
+    <Compile Include="ViewModel\IProductionVm.cs" />
+    <Compile Include="ViewModel\IrpViewModel.cs" />
     <Compile Include="ViewModel\ListDefectTypeViewModel.cs" />
     <Compile Include="ViewModel\ListDefectViewModel.cs" />
+    <Compile Include="ViewModel\ListPaletRejectStateViewModel.cs" />
     <Compile Include="ViewModel\ListLineViewModel.cs" />
-    <Compile Include="ViewModel\ListDomainViewModel.cs" />
+    <Compile Include="ViewModel\BaseDomainListVM.cs" />
     <Compile Include="ViewModel\ListModelViewModel.cs" />
     <Compile Include="ViewModel\ListProductionViewModel.cs" />
+    <Compile Include="ViewModel\MotiveViewModel.cs" />
+    <Compile Include="ViewModel\OverviewViewModel.cs" />
+    <Compile Include="ViewModel\PaletMapViewModel.cs" />
+    <Compile Include="ViewModel\PaletViewModel.cs" />
+    <Compile Include="ViewModel\ProductionViewModel.cs" />
+    <Compile Include="View\Controls\ActiveProduction.xaml.cs">
+      <DependentUpon>ActiveProduction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\AuditView.xaml.cs">
+      <DependentUpon>AuditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\MotiveView.xaml.cs">
+      <DependentUpon>MotiveView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\PaletView.xaml.cs">
+      <DependentUpon>PaletView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IrpView.xaml.cs">
+      <DependentUpon>IrpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ListPaletRejectStateView.xaml.cs">
+      <DependentUpon>ListPaletRejectStateView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ListLineView.xaml.cs">
       <DependentUpon>ListLineView.xaml</DependentUpon>
     </Compile>
@@ -103,6 +158,36 @@
     <Compile Include="View\ListModelView.xaml.cs">
       <DependentUpon>ListModelView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Overview.xaml.cs">
+      <DependentUpon>Overview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PaletMapView.xaml.cs">
+      <DependentUpon>PaletMapView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\Controls\ActiveProduction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\AuditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\MotiveView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\PaletView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IrpView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ListPaletRejectStateView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\ListLineView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -133,6 +218,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\ListModelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Overview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PaletMapView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,6 +266,9 @@
     <Resource Include="Properties\SampleData\DefectTypes.txt" />
     <Resource Include="Properties\SampleData\Lines.txt" />
     <Resource Include="Properties\SampleData\Models.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Properties\SampleData\PaletRejectStates.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
